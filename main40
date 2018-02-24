@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv) {
+  int x;
+  char a;
+  cin>>x;
+  int i;
+  float b[x];
+  float height[x];
+  for(i=0;i<x;i++)
+  {
+    cin>>a;
+    cin>>b[i];
+    if(a=='F')
+    {
+      height[i]=1.09*b[i];
+    }
+    if(a=='M'){
+      height[i]=b[i]/1.09;
+    }
+  }
+  for(i=0;i<x;i++)
+  {
+    printf("%.2f\n",height[i]);
+  }
+  return 0;
+}
