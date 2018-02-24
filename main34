@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv) {
+  int i,j,x,m,n,a[1100]={0};
+  int count=0,num;
+   cin>>x;
+   for(i=0;i<x;i++)
+   {
+     cin>>m;
+   for(j=0;j<m;j++)  
+   {
+     cin>>n;
+     a[n]++;
+     if(a[n]>count)
+     {
+       count=a[n];
+       num=n;
+     }
+     if(a[n]==count&&n>num)
+     {
+       num=n;
+     }
+   }
+  
+   }
+    cout<<num<<" "<<count;
+  return 0;
+}
