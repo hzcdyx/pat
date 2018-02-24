@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv) {
+  int i,j,x=0,m,n;
+  char a[1100][20];
+  cin>>a[x];
+  
+  while(a[x][0]!='.')
+  {
+    x++;
+    cin>>a[x];
+  }
+  if(x<2)
+  {
+    cout<<"Momo... No one is for you ...";
+  }
+  else if(x>=2&&x<14)
+  {
+    printf("%s is the only one for you...",a[1]);
+  }
+  else
+  {
+      printf("%s and %s are inviting you to dinner...",a[1],a[13]);
+  }
+  return 0;
+}
