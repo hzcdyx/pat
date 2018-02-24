@@ -1,0 +1,73 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+class node
+{
+	public:
+		string name;
+		int num;
+};
+int main(int argc, char** argv) {
+	int x,i,y,sum=0,ave,left,right,mid,t=0;
+	cin>>x;
+	string b[x];
+	for(i=0;i<x;i++)
+	{
+		cin>>b[i];
+	}
+	sort(b,b+x);
+	cin>>y;
+	node a[y];
+	string c[y];
+	for(i=0;i<y;i++)
+	{
+		cin>>a[i].name;
+		cin>>a[i].num;
+		sum+=a[i].num;
+	}
+	ave=(double)sum/y;
+	for(i=0;i<y;i++)
+	{
+		if(a[i].num>ave)
+		{
+		left=0;
+		right=x-1;
+		while(left<=right)
+		{
+		mid=(left+right)/2;
+		if(a[i].name==b[mid])	
+		{
+			a[i].num=-1;
+			break;
+		}
+		if(a[i].name>b[mid])
+		{
+			left=mid+1;
+		}
+		if(a[i].name<b[mid]){
+			right=mid-1;
+		}
+		}	
+		}
+	}
+	for(i=0;i<y;i++)
+	{
+		if(a[i].num>ave)
+		{
+			c[t]=a[i].name;
+		 t++;	
+		 
+		}
+	}
+	sort(c,c+t);
+	for(i=0;i<t;i++)
+	{
+		cout<<c[i]<<endl;
+	}
+	if(t==0)
+	{
+		cout<<"Bing Mei You";
+	}
+	return 0;
+}
