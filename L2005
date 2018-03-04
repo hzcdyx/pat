@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+set<int> a[55];
+int main(int argc, char** argv) {
+	int n,i,j,m,num,t,b,c;
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+		cin>>m;
+		for(j=0;j<m;j++)
+		{
+			cin>>num;
+			a[i].insert(num);
+		}
+	}
+	cin>>t;
+	for(i=0;i<t;i++)
+	{
+		int same=0;
+		cin>>b;
+		cin>>c;
+		int size_b=a[b-1].size();
+		int size_c=a[c-1].size();
+		set<int>::iterator it;
+		for(it=a[b-1].begin();it!=a[b-1].end();it++)
+		{
+			if(a[c-1].find(*it)!=a[c-1].end())
+			{
+				same++;
+			}
+		}
+		int nc=same;
+		int nt=size_b+size_c-same;
+		double ans=(nc*1.0)/(nt*1.0)*100;
+		printf("%.2f%%\n",ans);
+	}
+	return 0;
+}
