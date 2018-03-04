@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv) {
+	int t,c,i,j,n=0,max=0,m,p,maxnum=0;
+	cin>>t;
+	p=t;
+	for(i=t;i>1;i--)
+	{
+		if(p%i==0)
+		{
+		n++;
+		p=p/i;
+		if(max<n)	
+		{
+			max=n;
+			maxnum=i;
+		}
+		if(max==n)
+		{
+			maxnum=i;
+		}
+		}
+		else{
+			p=t;
+			n=0;
+		if(p%i==0)
+		{
+		n++;
+		p=p/i;
+		if(max<n)	
+		{
+			max=n;
+			maxnum=i;
+		}
+		if(max==n)
+		{
+			maxnum=i;
+		}
+		}
+		}
+	}
+	cout<<max<<endl;
+	m=maxnum;
+	for(i=max;i>0;i--)
+	{
+		cout<<m;
+		m=m+1;
+		if(i!=1)
+		{
+			cout<<'*';
+		}
+	}
+	return 0;
+}
