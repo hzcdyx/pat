@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+struct people{
+	int de,cai,sum;
+	char nu[10];
+	int flag;
+};
+bool cmp(people a,people b)
+{
+    if(a.flag!=b.flag)
+        return a.flag<b.flag;
+    if(a.sum!=b.sum)
+        return a.sum>b.sum;
+    if(a.de!=b.de) 
+		return a.de>b.de;
+	else{
+		return strcmp(a.nu,b.nu)<0;
+	}
+}
+int main(int argc, char** argv) {
+	int i,n,j,m,t,h,l;
+	people peo[100100];
+	cin>>n;
+	cin>>l;
+	cin>>h;
+	 m=n;
+	for(i=0;i<n;i++)
+	{
+	cin>>peo[i].nu;
+	cin>>peo[i].de;
+	cin>>peo[i].cai;
+	peo[i].sum=peo[i].cai+peo[i].de;
+	if(peo[i].cai<l||peo[i].de<l)
+	{
+		peo[i].flag=5;
+		m--;
+	}
+	else if(peo[i].cai>=h&&peo[i].de>=h){
+		peo[i].flag=1;
+	}
+	else if(peo[i].de>=h){
+		peo[i].flag=2;
+	}
+	else if(peo[i].de>=peo[i].cai)
+	{
+		peo[i].flag=3;
+	}
+	else{
+		peo[i].flag=4;
+	}
+	}
+	sort(peo,peo+n,cmp);
+	cout<<m<<endl;
+	for(i=0;i<m;i++)
+	{
+	printf("%s %d %d\n",peo[i].nu,peo[i].de,peo[i].cai);
+	}
+	return 0;
+}
