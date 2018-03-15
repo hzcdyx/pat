@@ -1,0 +1,99 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+const int maxn =510; 
+const int inf =1000000000;
+int G[maxn][maxn];
+int dis[maxn];
+int wei[maxn];
+int w[maxn];
+int num[maxn];
+int pre[maxn];
+bool vis[maxn]={false};
+int n,m,s,d;
+int disaj(int n)
+{
+	int i,j,u,minnum;
+	for(i=0;i<maxn;i++){
+		dis[i]=inf;
+	}
+	fill(pre,pre+maxn,n);
+	memset(num,0,sizeof(num));
+	memset(w,0,sizeof(w));
+	w[n]=wei[n];
+	num[n]=1;
+	dis[n]=0;
+	for(i=0;i<n;i++)
+	{
+	   minnum=inf, u=-1;
+		for(j=0;j<n;j++)
+		{
+		if(!vis[j])
+		{
+			if(dis[j]<minnum)
+			{
+				minnum=dis[j];
+				u=j;
+			}
+		}
+		}
+		if(u==-1){
+			return 1;
+		}
+		vis[u]=true;
+		for(j=0;j<n;j++)
+		{
+			if(!vis[j])
+			{
+				if(dis[j]>dis[u]+G[u][j])
+				{
+					dis[j]=dis[u]+G[u][j];
+					w[j]=w[u]+wei[j];
+					num[j]=num[u];
+					pre[j]=u;
+				}
+				else if(dis[j]==dis[u]+G[u][j])
+				{
+					if(w[u]+wei[j]>w[j])
+					{
+						w[j]=w[u]+wei[j];
+						pre[j]=u;
+					}
+					num[j]+=num[u];
+				}
+			}
+		}
+	}
+}
+int main(int argc, char** argv) {
+	int i,t,r,di,c,path[510],j,nu;
+	cin>>n>>m>>s>>d;
+	for(i=0;i<n;i++)
+	{
+		cin>>wei[i];
+	}
+	fill(G[0],G[0]+maxn*maxn,inf);
+	for(i=0;i<m;i++){
+		cin>>t;
+		cin>>r;
+		cin>>di;
+		G[t][r]=di;
+		G[r][t]=G[t][r];
+	};
+	disaj(s);
+	printf("%d %d\n",num[d],w[d]);
+	c=d;
+	nu=0;
+	while(pre[c]!=s)
+	{
+		path[nu++]=c;
+		c=pre[c];
+	}
+	path[nu]=s;
+	for(j=nu;j>0;j++)
+	{
+		printf("%d ",path[j]);
+	}
+	printf("%d",path[0]);
+	return 0;
+}
