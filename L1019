@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int s=0,s2=0;
+
+int main(int argc, char** argv) {
+	int i,j,t,o,m,n;
+	int ah,ahua,bh,bhua;
+	cin>>m;
+	o=m;
+	cin>>n;
+	j=n;
+	cin>>t;
+	for(i=0;i<t;i++)
+	{
+		cin>>ah>>ahua>>bh>>bhua;
+	if((ah+bh)==ahua&&ahua!=bhua)
+	{
+		m--;
+		if(m<0)
+		{
+			break;
+		}
+	}
+	if((ah+bh)==bhua&&ahua!=bhua)
+	{
+		n--;
+		if(n<0)
+		{
+			break;
+		}
+	}
+	 }
+	 if(m<0) 
+	 {
+	 	cout<<'A'<<endl;
+	 	cout<<j-n;
+	 }
+	 else{
+	 	cout<<'B'<<endl;
+	 	cout<<o-m;
+	 }
+	return 0;
+}
