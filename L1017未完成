@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int s=0,s2=0;
+void at(long long n)
+{
+	int h;
+	long long c;
+	c=n;
+	while(c!=0)
+	{
+		h=c%10;
+		
+		if(h==2)
+		{
+			s2++;
+			s++;
+		}
+		else{
+			s++;
+		}
+		c/=10;
+	}
+	
+}
+int main(int argc, char** argv) {
+	int i,j=0,t,o=0;
+	double m=1.0;
+	long long n,k;
+	cin>>n;
+	k=n;
+	if(n<0)
+	{
+		n=-n;
+		m*=1.5;
+	 } 
+	at(n);
+//	cout<<s2;
+	m*=1.0*s2/s;
+	
+	if(n%2==0)
+	{
+	m*=2;
+	}
+	printf("%.2f%%",m*100);
+	return 0;
+}
