@@ -1,0 +1,74 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int in[35],post[35],num=0,n;
+struct node{
+	int data;
+	node* lchild;
+	node* rchild;
+};
+node* create(int postl,int postr,int inl,int inr)
+{
+	int t,m,llength;
+	if(postl>postr)
+	{
+		return NULL;
+	}
+	else{
+		node* root=new node;
+		root->data=post[postr];
+		for(t=inl;t<=inr;t++)
+		{
+			if(in[t]==post[postr])
+			{
+				m=t;
+				break;
+			}
+		}
+		llength=t-inl;
+		root->lchild=create(postl,postl+llength-1,inl,t-1);
+		root->rchild=create(postl+llength,postr-1,t+1,inr);
+		return root;
+	}
+}
+void bfs(node* root)
+{
+	queue<node*> q;
+	q.push(root);
+	while(!q.empty())
+	{
+		node* now=q.front();
+		q.pop();
+		printf("%d",now->data);
+		num++;
+		if(num!=n)
+		{
+			printf(" ");
+		}
+		if(now->lchild!=NULL)
+		{
+			q.push(now->lchild);
+		}
+		if(now->rchild!=NULL)
+		{
+			q.push(now->rchild);
+		}
+		
+	}
+}
+int main(int argc, char** argv) {
+	int i,j,m;
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+		cin>>post[i];
+	}
+		for(i=0;i<n;i++)
+	{
+		cin>>in[i];
+	}
+	node* root=create(0,n-1,0,n-1);
+	bfs(root);
+	return 0;
+}
