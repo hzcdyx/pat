@@ -1,0 +1,78 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std; 
+struct peo{
+	string name;
+	int num[1100]={0};
+	int flag[1100]={0};
+	int nu=0;
+	double avg;
+}pe[1100];
+bool cmp(peo a,peo b)
+{
+	if(a.nu!=b.nu)
+	{
+		return a.nu>b.nu;
+		
+	}
+	else {
+		return a.avg<b.avg;
+	}
+}
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int main(int argc, char** argv) {
+	int x,y,i,j,n,t,s=0,o,num=0,nu=0;
+	cin>>n;
+	
+	for(i=0;i<n;i++)
+	{
+		cin>>pe[i].name;
+		cin>>o;
+		for(j=0;j<o;j++)
+		{
+			cin>>t;
+			pe[i].flag[t]=1;
+			
+		}
+		pe[i].avg=o;
+		for(j=0;j<110;j++)
+		{
+			s=0;
+			if(pe[i].flag[j]!=0)
+			{
+				pe[i].nu++;
+				s+=pe[i].num[j];
+			}
+		}
+	
+	
+	}
+	sort(pe,pe+n,cmp);
+	if(n>=3)
+	{
+		for(i=0;i<3;i++)
+		{
+			cout<<pe[i].name;
+			if(i!=2)
+			{
+				cout<<" ";
+			}
+		}
+	}
+	else{
+		for(i=0;i<n;i++)
+		{
+			cout<<pe[i].name;
+			cout<<" ";
+		}
+		for(i=0;i<3-n;i++)
+		{
+			cout<<"-";
+			if(i!=2-n)
+			{
+				cout<<" ";
+			}
+		}
+	}
+	return 0;
+}
