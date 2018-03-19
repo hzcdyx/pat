@@ -1,0 +1,106 @@
+#include <bits/stdc++.h>
+using namespace std; 
+int father[505];
+int edge[5005];
+int edg[5005];
+int lost[505]={0};
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int find(int x)
+{
+	int a=x;
+	while(father[x]!=x)
+	{
+		x=father[x];
+	}
+	while(a!=father[a])
+	{
+		int z=a;
+		a=father[a];
+		father[z]=x;
+	}
+	return x;
+}
+void uniont(int cs,int cd)
+{
+	int d=find(cs);
+	int o=find(cd);
+	if(d!=o)
+	{
+		father[d]=o;
+	}
+}
+int main(int argc, char** argv) {
+	int i,j,m,n,k,x,num=0,nu=0,ny= 0,p,t,lag[55]={0};
+	double s=0;
+	cin>>n>>m;
+	for(j=0;j<n;j++)
+	{
+		father[j]=j;
+	}
+	for(i=0;i<m;i++)
+	{
+		cin>>k;
+		edge[i]=k;
+		cin>>x;
+		edg[i]=x;
+		uniont(k,x);
+	}
+	for(i=0;i<n;i++)
+	{
+		if(i==father[i])
+		{
+			num++;
+		}
+	
+	}
+	cin>>p;
+	for(i=0;i<p;i++)
+	{
+	cin>>t;
+	nu=0;
+	lost[t]=1;
+	for(j=0;j<n;j++)
+	{
+		father[j]=j;
+	}
+	for(j=0;j<m;j++)
+	{
+		if(lost[edge[j]]!=1&&lost[edg[j]]!=1)
+		{
+			uniont(edge[j],edg[j]);
+			
+		}
+		else{
+			continue;
+		}
+		
+	}
+//		for(j=0;j<n;j++)
+//	{
+//		cout<<father[j];
+//	}
+		for(j=0;j<n;j++)
+	{
+		if(j==father[j])
+		{
+			nu++;
+//			cout<<j;
+		}
+	}
+
+	if(nu==num||nu==num+1)
+	{
+		printf("City %d is lost.\n",t);
+	}
+	else{
+		printf("Red Alert: City %d is lost!\n",t);
+	}
+	num=nu;
+	}
+	if(p==n)
+	{
+		printf("Game Over.");
+	}
+	
+	return 0;
+}
