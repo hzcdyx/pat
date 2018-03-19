@@ -1,0 +1,65 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std; 
+int s[1010]={0},e[1010]={0},t1[1010],t2[1010];
+int at(int m,int n)
+{
+  return m*60+n;
+}
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int main(int argc, char** argv) {
+  int x,y,i,j,n,t,num=0,nu=0;
+  char a;
+  double time=0;
+  cin>>n;
+  
+  for(i=0;i<n;i++)
+  {
+    num=0,time=0;
+    memset(s,0,sizeof(s));
+    memset(e,0,sizeof(e));
+    scanf("%d %c %2d:%2d",&t,&a,&x,&y);
+    if(t==0)
+    {
+      if(num!=0)
+      {
+        time=time/num;
+      }
+      
+      printf("%d %.0f\n",num,time);
+      num=0;
+      time=0;
+      continue;
+    }
+    while(t!=0){
+      if(a=='S')
+      {
+        s[t]=1;
+        t1[t]=at(x,y);
+      }
+      if(a=='E')
+      {
+        if(s[t]==1)
+        {
+        num++;
+        t2[t]=at(x,y);
+        time+=t2[t]-t1[t];
+        s[t]=0;
+        }
+      }
+      scanf("%d %c %2d:%2d",&t,&a,&x,&y);
+    }
+    if(t==0)
+    {
+      time=time/num;
+      printf("%d %.0f\n",num,time);
+      memset(s,0,sizeof(s));
+    memset(e,0,sizeof(e));
+      num=0;
+      time=0;
+      continue;
+    }
+  }
+  
+  return 0;
+}
