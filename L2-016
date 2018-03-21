@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int fa[100100],ma[100100],exist[100100],level[100100];
+struct peo{
+	int sex;
+	int fa;
+	int ma;
+}pe[100100];
+int main(int argc, char** argv) {
+	int n,i,j,m,c,d;
+	memset(exist,0,sizeof(exist));
+	cin>>n;
+	int t;
+	char a;
+	for(i=0;i<n;i++)
+	{
+		cin>>t;
+		cin>>a;
+		exist[t]=1;
+		if(a=='M'){
+			pe[t].sex=1;
+		}
+		else{
+			pe[t].sex=0;
+		}
+		cin>>pe[t].fa;
+		cin>>pe[t].ma;
+		if(pe[t].fa!=-1)
+		{
+			pe[pe[t].fa].sex=1;
+		}
+		if(pe[t].ma!=-1)
+		{
+			pe[pe[t].ma].sex=0;
+		}
+	}
+	cin>>m;
+
+	for(i=0;i<m;i++)
+	{
+		fill(level,level+100100,0);
+		cin>>c>>d;
+		if(pe[c].sex==pe[d].sex)
+		{
+			cout<<"Never Mind"<<endl;
+			continue;
+		}
+		queue<int> qu;
+		qu.push(c);
+		qu.push(d);
+		level[c]=1;
+		level[d]=1;
+		set<int> yo;
+		yo.clear();
+		int flag=1;
+		while(!qu.empty())
+		{
+			int t=qu.front();
+			qu.pop();
+			int size=yo.size();
+			yo.insert(t);
+			if(yo.size()==size)
+			{
+				cout<<"No"<<endl;
+				flag=0;
+				break;
+			}
+			if(exist[t]==0)
+			{
+				continue;
+			}
+			if(level[t]<=4)
+			{
+				if(pe[t].fa!=-1)
+				{
+					qu.push(pe[t].fa);
+					level[pe[t].fa]=level[t]+1;
+				}
+				if(pe[t].ma!=-1)
+				{
+					qu.push(pe[t].ma);
+					level[pe[t].ma]=level[t]+1;
+				}
+			}
+		}
+		if(flag==1)
+		{
+			cout<<"Yes"<<endl;
+		}
+	}
+	return 0;
+}
