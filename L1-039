@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv) {
+	int a,i,j,n,m,f,nu=0;
+	string b;
+	cin>>n;
+	scanf("\n");
+	getline(cin,b);
+
+	m=n;
+	f=b.length();
+
+	a=f/m;
+	char c[m+5][a+5];
+	if(f%m!=0)
+	{
+		a=a+1;
+	}
+
+	for(i=a-1;i>=0;i--)
+	{
+		for(j=0;j<m;j++)
+		{
+			if(nu>=f)
+			{
+				c[j][i]=' ';
+			}
+			else{
+				c[j][i]=b[nu++];
+			}
+		}
+	}
+	for(i=0;i<m;i++)
+	{
+		for(j=0;j<a;j++)
+		{
+			cout<<c[i][j];
+		}
+		cout<<endl;
+	}
+	return 0;
+}
