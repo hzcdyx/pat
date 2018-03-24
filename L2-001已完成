@@ -1,0 +1,104 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int n,m,s,d;
+int dis[550],wei[550],w[550],g[550][550],pre[550],num[550],vis[550],path[550];
+int disij(int s)
+{
+	int minn=INT_MAX,idx=-1,i,j;
+	fill(dis,dis+550,INT_MAX);
+	memset(num,0,sizeof(num));
+	fill(pre,pre+550,s);
+	for(i=0;i<n;i++)
+	{
+		wei[i]=w[i];
+		
+	}
+	memset(vis,0,sizeof(vis));
+	wei[s]=w[s];
+	num[s]=1;
+	dis[s]=0;
+	for(j=0;j<n;j++)
+	{
+		idx=-1;
+		minn=INT_MAX;
+	for(i=0;i<n;i++)
+	{
+	
+		if(!vis[i]&&dis[i]<minn)
+		{
+		minn=dis[i];
+		idx=i;
+		}
+	
+	}
+		if(idx==-1)
+		{
+			return -1 ;
+		}
+	vis[idx]=1;
+
+	
+	for(i=0;i<n;i++)
+	{
+		if(!vis[i]&&g[idx][i]!=INT_MAX)
+		{
+		if(dis[idx]+g[idx][i]<dis[i])
+		{
+		dis[i]=	dis[idx]+g[idx][i];
+		wei[i]=w[i]+wei[idx];
+		num[i]=num[idx];
+		pre[i]=idx;
+		}
+		else if(dis[idx]+g[idx][i]==dis[i])
+		{
+			
+			if(wei[idx]+w[i]>wei[i])
+			{
+			wei[i]=	wei[idx]+w[i];
+			pre[i]=idx;
+			}
+			num[i]+=num[idx];
+		}
+		
+		}
+	}
+		
+	}
+}
+int main(int argc, char** argv) {
+	int i,j,t,k,b,nu=0;
+	cin>>n>>m>>s>>d;
+	memset(w,0,sizeof(w));
+	for(i=0;i<n;i++)
+	{
+		cin>>w[i];
+	 } 
+	 fill(g[0],g[0]+550*550,INT_MAX);
+	 for(i=0;i<m;i++)
+	 {
+	 	cin>>t;
+	 	cin>>k;
+	 	cin>>b;
+	 	g[t][k]=b;
+	 	g[k][t]=b;
+	 }
+	 disij(s);
+	 cout<<num[d]<<' '<<wei[d]<<endl;
+	 int c=d;
+	 while(c!=s)
+	 {
+	 	path[nu++]=c;
+	 	c=pre[c];
+	 }
+	 path[nu]=s;
+	 for(i=nu;i>=0;i--)
+	 {
+	 cout<<path[i];
+	 if(i!=0)
+	 {
+	 	cout<<' ';
+	 }
+	 }
+	return 0;
+}
