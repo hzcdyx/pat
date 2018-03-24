@@ -1,0 +1,130 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int n,father[10100],vis[10100];
+struct people{
+	int id;
+	int fa;
+	int ma;
+	int num;
+	int nu;//子女
+	int area;
+	vector<int> child; 
+}pe[10100];
+struct family{
+	int id=0;
+	int num=0;//人数
+	int nu=0;//房数
+	int area=0;//面积 
+	double prarea=0;
+	double prnum=0;
+}fam[11000],res[11000];
+bool cmp(family a,family b)
+{
+	if(a.prarea==b.prarea)
+	{
+		return a.id<b.id;
+	}
+	return a.prarea>b.prarea;
+}
+int find(int s)
+{
+	
+	while(s!=father[s])
+	{
+		s=father[s];
+	}
+	return s;
+}
+void init()
+{
+	for(int i=0;i<10100;i++)
+	{
+		father[i]=i;
+	}
+}
+void unionn(int a,int b)
+{
+	if(find(a)!=find(b))
+	{
+		int x=find(a);
+		int y=find(b);
+		if(x<=y)
+		{
+			father[y]=x;
+			
+		}
+	
+		else{
+			father[x]=y;
+		}
+	}
+}
+int main(int argc, char** argv) {
+	cin>>n;
+	int i,j,t;
+	memset(vis,0,sizeof(vis));
+	init();
+	for(i=0;i<n;i++)
+	{
+		cin>>pe[i].id;
+		vis[pe[i].id]=1;
+		cin>>pe[i].fa;
+		if(pe[i].fa!=-1)
+		{
+			unionn(pe[i].id,pe[i].fa);
+			vis[pe[i].fa]=1;
+		}
+		cin>>pe[i].ma;
+		if(pe[i].ma!=-1)
+		{
+			unionn(pe[i].id,pe[i].ma);
+			vis[pe[i].ma]=1;
+		}
+		cin>>pe[i].nu;
+		for(j=0;j<pe[i].nu;j++)
+		{
+			cin>>t;
+			pe[i].child.push_back(t);
+			vis[t]=1;
+			unionn(pe[i].id,t);
+		}
+		cin>>pe[i].num;
+		cin>>pe[i].area;
+		
+	}
+	for(i=0;i<n;i++)
+	{
+	int id=find(pe[i].id);
+	fam[id].id=id;
+	fam[id].nu+=pe[i].num;
+	fam[id].area+=pe[i].area;
+	}
+	int cnt=0;
+	for(i=0;i<10100;i++)
+	{
+	if(vis[i])
+	{
+		fam[find(i)].num++;
+		if(find(i)==i)
+		{
+			cnt++;
+		}
+	}	
+	}
+	for(i=0;i<11000;i++)
+	{
+		if(fam[i].id!=0)
+		{
+			fam[i].prarea=1.0*fam[i].area/fam[i].num;
+			fam[i].prnum=1.0*fam[i].nu/fam[i].num;
+		}
+	}
+	sort(fam,fam+11000,cmp);
+	cout<<cnt<<endl;
+	for(i=0;i<cnt;i++)
+	{
+		printf("%04d %d %.3f %.3f\n",fam[i].id,fam[i].num,fam[i].prnum,fam[i].prarea);
+	}
+	return 0;
+}
