@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int n,house[10100]={0},vis[10100],area[10100]={0};
+vector<int> a[10100];
+
+int sumarea=0,sumpiece=0,minid=INT_MAX,cnt=0;
+struct family{
+	int id=0;
+	int num=0;//人数
+	int nu=0;//房数
+	int area=0;//面积 
+	double prarea=0;
+	double prnum=0;
+	family(){
+	}
+	family(int a,int b,double c,double d)
+	{
+		id=a;
+		num=b;
+		prnum=c;
+		prarea=d;
+	}
+}fam[11000],res[11000];
+vector<family> b;
+bool cmp(family a,family b)
+{
+	if(a.prarea==b.prarea)
+	{
+	return	a.id<b.id;
+	}
+	return  a.prarea>b.prarea;
+ } 
+void dfs(int n)
+{
+	vis[n]=0;
+	sumarea+=area[n];
+	sumpiece+=house[n];
+	minid=min(minid,n);
+	cnt++;
+	for(int i=0;i<a[n].size();i++)
+	{
+		if(vis[a[n][i]]==1)
+		{
+			
+		dfs(a[n][i]);
+		}
+	}
+}
+int main(int argc, char** argv) {
+	cin>>n;
+	int i,j,t,id,fa,ma,num,casea=0;
+	memset(vis,0,sizeof(vis));
+	for(i=0;i<n;i++)
+	{
+		cin>>id>>fa>>ma>>num;
+		vis[id]=1;
+		if(fa!=-1)
+		{
+			a[id].push_back(fa);
+			a[fa].push_back(id);
+			vis[fa]=1;
+		}
+		if(ma!=-1)
+		{
+			a[id].push_back(ma);
+			a[ma].push_back(id);
+			vis[ma]=1;
+		}
+		for(j=0;j<num;j++)
+		{
+			cin>>t;
+			a[id].push_back(t);
+			a[t].push_back(id);
+			vis[t]=1;
+		}
+		cin>>house[id]>>area[id];
+	}
+
+	for(i=0;i<10100;i++)
+	{
+		if(vis[i])
+		{
+			casea++;
+			cnt=0,sumarea=0,sumpiece=0,minid=INT_MAX;
+			dfs(i);
+			family fami=family(minid,cnt,1.0*sumpiece/cnt,1.0*sumarea/cnt);
+			b.push_back(fami);
+		}
+	}
+	sort(b.begin(),b.end(),cmp);
+	printf("%d\n",casea);
+	for(i=0;i<b.size();i++)
+	{
+		printf("%04d %d %.3lf %.3lf\n",b[i].id,b[i].num,b[i].prnum,b[i].prarea);
+	}
+	return 0;
+}
