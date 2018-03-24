@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+struct moon{
+	double price;
+	double store;
+	double pri;
+}mo[1010];
+bool cmp(moon a,moon b)
+{
+	return a.price>b.price;
+}
+int main(int argc, char** argv) {
+	int n,d,i;
+	double nu=0,sum=0,t;
+	cin>>n>>d;
+	for(i=0;i<n;i++)
+	{
+		cin>>mo[i].store;
+	}
+	for(i=0;i<n;i++)
+	{
+		cin>>t;
+		mo[i].pri=t;
+		mo[i].price=1.0*t/mo[i].store;
+//		cout<<t<<mo[i].store<<mo[i].price;
+	}
+	sort(mo,mo+n,cmp);
+	i=0;
+	while(sum<d)
+	{
+		
+		if(i<n&&sum+mo[i].store<=d)
+		{
+			sum+=mo[i].store;
+			nu+=mo[i].pri;
+			i++;
+//			cout<<nu;
+//			cout<<i;
+		}
+		else{
+			if(i<n)
+			{
+				nu+=1.0*(d-sum)*mo[i].price;
+//				cout<<d<<sum<<mo[i].price;
+				sum=d;
+//				cout<<nu;
+				i++;
+				break;
+			}else{
+				break;
+			}
+		}
+	}
+	printf("%.2f",nu);
+	return 0;
+}
