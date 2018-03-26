@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv) {
+	set<int> s;
+	int n,i,j,t,c,a[10];
+		cin>>t;
+	cin>>n;
+
+	j=t;
+	c=t;
+	while(1)
+	{
+		t=j;
+		s.clear();
+		for(i=0;i<4;i++)
+		{
+		s.insert(t%10);
+		t/=10;	
+		}
+		if(s.size()==n)	
+		{
+			break;
+		}
+		else{
+			j++;
+		}
+		
+	}
+	printf("%d %04d",j-c,j);
+	return 0;
+}
