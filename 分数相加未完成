@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+struct fraction{
+	int up,down;	
+}fra[110];
+int gcd(int a,int b)
+{
+	if(a<b)
+	{
+		swap(a,b);
+	}
+		
+	if(b==0)
+	{
+		return a;
+	}
+	else{
+		return gcd(b,b%a);
+	}
+	
+	
+}
+fraction reduction(fraction res)
+{
+	if(res.down<0)
+	{
+		res.down=-res.down;
+		res.up=-res.up;
+	}
+	if(res.up==0)
+	{
+		res.down=1;
+	}
+	else{
+		int d=gcd(abs(res.up),abs(res.down));
+		res.up/=d;
+		res.down/=d;
+	}
+//	cout<<res.down<<res.up;
+	return res;
+}
+fraction add(fraction f1,fraction f2)
+{
+	fraction res;
+	res.up=f1.up*f2.down+f1.down*f2.up;
+	res.down=f1.down*f2.down;
+//	cout<<res.up<<res.down;
+	return reduction(res);
+}
+void show(fraction a)
+{
+	a=reduction(a);
+	if(a.down==1)
+	{
+		printf("%lld",a.up);
+	}
+	else if(abs(a.up)>abs(a.down))
+	{
+		printf("%d %d/%d",a.up/a.down,abs(a.up)%a.down,a.down);
+	}
+	else{
+		printf("%d/%d",a.up,a.down);
+	}
+}
+int main(int argc, char** argv) {
+	int n,i;
+	cin>>n;
+	fraction fr,m;
+	for(i=0;i<n;i++)
+	{
+		scanf("%d/%d",&fra[i].up,&fra[i].down);
+	}
+	fr=fra[0];
+	for(i=1;i<n;i++)
+	{
+		m=add(fr,fra[i]);
+	}
+	show(m);
+	
+	return 0;
+}
