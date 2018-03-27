@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int a[]={7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2};
+char b[]={'1','0','X','9','8','7','6','5','4','3','2'};
+bool check(string s)
+{
+	int sum=0;
+	for(int i=0;i<17;i++)
+	{
+		sum+=a[i]*(s[i]-'0');
+	}
+	sum=sum%11;
+
+
+	if(b[sum]==s[17])
+	{
+		return true;
+	}
+	return false;
+}
+int main(int argc, char** argv) {
+	int m,n,i,num=0;
+	double y=1,j=0,x;
+	string s;
+	cin>>s;
+	if(s[0]=='-')
+	{
+		num++;
+		y*=1.5;
+		x=s.size()-1;
+		
+	}
+	
+	else{
+		x=s.size();
+	}
+	if((s[s.size()-1]-'0')%2==0)
+	{
+		y*=2;
+	}
+	
+	while(num!=s.size())
+	{
+		if((s[num++]-'0')==2)
+		{
+			j++;
+		}
+		
+		
+	}
+	y*=1.0*j/x;
+	printf("%.2f%%",y*100);
+	return 0;
+}
