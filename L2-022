@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std; 
+const int maxn=100005;
+struct node{
+  int data;
+  int next;
+  int address; 
+  int order;
+}no[maxn];
+int flag[100000]={0};
+struct node c[100000];
+int num=0;
+bool cmp(node a,node b)
+{
+
+    return a.order<b.order;
+  
+}
+int main(int argc, char** argv) {
+  
+  int m,n,x,y,k,i,j,a,b,s=0,num=0;
+  memset(flag,0,sizeof(flag));
+  for(i=0;i<maxn;i++)
+  {
+    no[i].order=2*maxn;
+  }
+  cin>>m;
+  cin>>n;
+  for(i=0;i<n;i++)
+  {
+    cin>>x;
+    no[x].address=x;
+    cin>>no[x].data;
+    cin>>no[x].next;
+    
+  }
+  k=m;
+  
+  while(k!=-1)
+  {
+      no[k].order=num++;
+      k=no[k].next;
+    
+  }
+  sort(no,no+maxn,cmp);
+
+  int r=num-1;
+  int l=0,cnt=0;
+  while(l<=r)
+  {
+    if(l==r)
+    {
+      c[cnt++]=no[r--];
+    }
+    else{
+      c[cnt++]=no[r--];
+      c[cnt++]=no[l++];
+    }
+    
+    
+  }
+  for(i=0;i<cnt;i++)
+  {
+    if(i!=num-1)
+    {
+      printf("%05d %d %05d\n",c[i].address,c[i].data,c[i+1].address);
+    }
+    else{
+      printf("%05d %d -1\n",c[i].address,c[i].data);
+    }
+  }
+  return 0;
+}
