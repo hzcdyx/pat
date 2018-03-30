@@ -1,0 +1,70 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std; 
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int num=0,n,nu=0,t=100;
+int inorder[10005],preorder[10005],tree[100]={0};
+
+void insert(int root,int data)
+{
+  if(tree[root]==0)
+  {
+    tree[root]=data;
+    
+  }
+  else{
+    if(data>tree[root])
+    {
+      insert(2*root,data);
+    }
+    else{
+      insert(2*root+1,data);
+    }
+  }
+}
+int main(int argc, char** argv) {
+  int i,j,m,flag=1;
+  cin>>n;
+  for(i=1;i<=n;i++)
+  {
+    cin>>m;
+    insert(1,m);
+  }
+  for(i=1;i<=t;i++)
+  {
+    if(tree[i]!=0)
+    {
+      num++;
+    }
+  }
+  for(i=1;i<=t;i++)
+  {
+    if(tree[i]!=0)
+    {
+      printf("%d",tree[i]);
+      nu++;
+      if(nu!=num)
+      {
+        printf(" ");
+      }
+      else{
+        printf("\n");
+      }
+    }
+    else{
+      if(nu<num)
+      {
+        flag=0;
+      }
+    }
+    
+  }
+  if(flag==1)
+  {
+    printf("YES");
+  }
+  else{
+      printf("NO");
+  }
+  return 0;
+}
