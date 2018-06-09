@@ -1,0 +1,85 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#include<math.h>
+using namespace std;
+int fa[10100];
+int Find(int a)
+{
+    int t=a;
+    int z;
+    if(fa[a]!=a)
+    {
+        a=fa[a];
+    }
+    while(fa[t]!=t)
+    {
+        z=t;
+        t=fa[t];
+        fa[z]=a;
+    }
+    return a;
+}
+void Union(int a,int b)
+{
+    if(Find(a)!=Find(b))
+    {
+        fa[Find(a)]=Find(b);
+    }
+}
+int main()
+{
+    int i,j,n,m,t,k,d,q;
+    cin>>n>>m;
+    int g[m+1],go[m+1],lost[n+1];
+    memset(g,0,sizeof(g));
+    for(i=1;i<=n;i++)
+    {
+        fa[i]=i;
+    }
+    for(i=0;i<m;i++)
+    {
+     cin>>t>>k;
+     g[i]=t;
+     go[i]=k;
+     Union(t,k);
+    }
+    cin>>q;
+    for(i=0;i<q;i++)
+    {
+        int flag=1;
+    memset(lost,0,sizeof(lost));
+    for(j=0;j<=n;j++)
+    {
+        fa[j]=j;
+    }
+    cin>>d;
+
+    for(j=0;j<d;j++)
+    {
+     cin>>t;
+     lost[t]=1;
+    }
+    for(j=0;j<m;j++)
+    {
+        if(lost[g[j]]==0&&lost[go[j]]==0)
+        {
+            Union(g[j],go[j]);
+        }
+    }
+    for(j=1;j<=n;j++)
+    {
+      if(Find(j)!=j)
+      {
+          flag=0;
+      }
+    }
+    if(flag==0)
+    {
+        cout<<"NO"<<endl;
+    }
+    else{
+        cout<<"YES"<<endl;
+    }
+    }
+    return 0;
+}//求素数的程序
