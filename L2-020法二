@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+double sum=0;
+double r;
+vector<int> a[100010];
+int dedao[100010],vis[100010];
+void dfs(int n,double z)
+{
+    int i;
+    if(vis[n]==0)
+    {
+        vis[n]=1;
+        if(dedao[n]>0)
+        {
+            sum+=dedao[n]*z*1.0;
+            cout<<sum<<endl;
+        }
+        else{
+                z=z*(100-r)*0.01;
+             for(i=0;i<a[n].size();i++)
+        {
+            if(!vis[a[n][i]])
+            {
+
+                cout<<z<<endl;
+                dfs(a[n][i],z);
+            }
+        }
+        }
+
+    }
+}
+int main()
+{
+    int n,i,j,t,m;
+    double z,res=0;
+    cin>>n>>z>>r;
+    double energy[n];
+    memset(dedao,0,sizeof(dedao));
+    for(i=0;i<n;i++)
+    {
+        cin>>t;
+        if(t!=0)
+        {
+        for(j=0;j<t;j++)
+        {
+           cin>>m;
+           a[i].push_back(m);
+        }
+
+        }
+        else{
+            cin>>dedao[i];
+        }
+    }
+    memset(vis,0,sizeof(vis));
+//    queue<int> q;
+//    q.push(0);
+//    energy[0]=z;
+//
+//    while(!q.empty())
+//    {
+//        int c=q.front();
+//
+//        vis[c]=1;
+//        for(i=0;i<a[c].size();i++)
+//        {
+//            if(!vis[a[c][i]])
+//            {
+//            if(dedao[a[c][i]]>0)
+//            {
+//                res+=energy[c]*dedao[a[c][i]];
+//                cout<<energy[c]<<endl;
+//                cout<<dedao[a[c][i]]<<endl;
+//                cout<<energy[c]*dedao[a[c][i]]<<endl;
+//            }
+//            else{
+//                energy[a[c][i]]=energy[c]*(100-r)*0.01;
+//                cout<<energy[c]*(100-r)*0.01<<endl;
+//                q.push(a[c][i]);
+//            }
+//            vis[a[c][i]]=1;
+//            }
+//        }
+//        q.pop();
+//    }
+sum=0;
+dfs(0,z);
+    printf("%d",(int)sum);
+    return 0;
+}
