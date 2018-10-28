@@ -1,0 +1,161 @@
+dfs版本
+#include <bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int n;
+    int d;
+};
+int main()
+{
+    int i,j,n,m,k,t,q,b,f,cn,dis,res;
+    node re;
+    int visit[10010];
+    vector<int> a[10010];
+    queue<node> p;
+    cin>>n>>m>>k;
+    for(i=0;i<n;i++)
+    {
+        a[i].clear();
+    }
+    for(i=0;i<m;i++)
+    {
+        cin>>t>>q;
+        a[t].push_back(q);
+        a[q].push_back(t);
+    }
+    for(i=0;i<k;i++)
+    {
+        re.d=0;
+        re.n=0;
+        res=0;
+        memset(visit,0,sizeof(visit));
+        node cnode;
+        while(!p.empty())
+        {
+            p.pop();
+        }
+        cin>>b;
+        cnode.d=0;
+        cnode.n=b;
+        p.push(cnode);
+        visit[b]=1;
+        while(!p.empty())
+        {
+            int cnum=p.front().n;
+            for(j=0;j<a[cnum].size();j++)
+            {
+                cn=a[p.front().n][j];
+                if(!visit[cn])
+                {
+                    cnode.d=p.front().d+1;
+                    cnode.n=cn;
+                    p.push(cnode);
+                    visit[cn]=1;
+                    if(re.d<cnode.d)
+                    {
+                        re=cnode;
+                    }
+                    else if(re.d==cnode.d&&re.n>cnode.n)
+                    {
+                        re=cnode;
+                    }
+                }
+            }
+            p.pop();
+        }
+        cout<<re.n<<endl;
+    }
+    return 0;
+}
+并查集版本
+#include <bits/stdc++.h>
+using namespace std;
+int fa[10010];
+vector<vector<int> > a(10010);
+int level[10010]={0},vis[10010]={0};
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+int find(int n)
+{
+	int a=n;
+	while(n!=fa[n])
+	{
+		n=fa[n];
+	}
+	while(a!=fa[a])
+	{
+		int z=a;
+		a=fa[a];
+		fa[z]=n;
+	}
+	return n;
+}
+void init()
+{
+	for(int i=0;i<10010;i++)
+	{
+		fa[i]=i;
+	}
+}
+void unioN(int a,int b)
+{
+	int x=find(a);
+	int y=find(b);
+	if(x!=y)
+	{
+	fa[x]=y;
+		
+	}
+}
+int main(int argc, char** argv) {
+	int n,m,i,j,x,y,v,e,k,t,ma=0,sa=0,index,flag;
+	cin>>n>>m>>k;
+	for(i=0;i<m;i++)
+	{
+		cin>>x;
+		cin>>y;
+		a[x].push_back(y);
+		a[y].push_back(x);
+	}
+	for(i=0;i<k;i++)
+	{
+		memset(level,0,sizeof(level));
+		memset(vis,0,sizeof(vis));
+		index=0;
+		ma=0;
+		cin>>t;
+		queue<int> qu;
+		qu.push(t);
+		level[t]=1;
+		vis[t]=1;
+		while(!qu.empty())
+		{
+			v=qu.front();
+			qu.pop();
+			if(level[v]>ma)
+			{
+				ma=level[v];
+				index=v;
+			}
+			if(level[v]==ma&&v<index)
+			{
+				index=v;
+			}
+		for(j=0;j<a[v].size();j++)
+		{
+			if(vis[a[v][j]]==0)
+			{
+				vis[a[v][j]]=1;
+				qu.push(a[v][j]);
+				level[a[v][j]]=level[v]+1;
+			}
+		}
+		}
+		if(a[t].size()==0)
+		{
+			index=0;
+		}
+		cout<<index<<endl;
+	}
+	return 0;
+}
