@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct node
+{
+    int n;
+    int d;
+};
+#define MAX 100001
+int small[MAX];
+void update(int cn,int ad)
+{
+    while(cn<MAX)
+    {
+        small[cn]+=ad;
+        cn+=cn&(-cn);
+    }
+}
+int sum(int cn)
+{
+    int s=0;
+    while(cn>0)
+    {
+        s+=small[cn];
+        cn-=cn&(-cn);
+    }
+    return s;
+}
+int main()
+{
+    int i,j,n,m,k,t,q,b,f,cn,dis,res;
+    int num[110],flag[110];
+    vector<int> a[110];
+    cin>>n;
+    res=n;
+    dis=1;
+    i=0;
+    memset(flag,0,sizeof(flag));
+    for(i=0;i<n;i++)
+    {
+        cin>>m;
+        num[i]=m*10;
+        a[i].clear();
+    }
+    i=0;
+    while(res>1)
+    {
+        if(!flag[i])
+        {
+            a[i].push_back(dis);
+            dis++;
+            if(a[i].size()==num[i])
+            {
+                flag[i]=1;
+                res--;
+            }
+            k=i;
+        }
+        i=(i+1)%n;
+    }
+
+    for(i=0;i<n;i++)
+    {
+        if(!flag[i])
+        {
+            if(k==i)
+            {
+                dis++;
+            }
+            while(a[i].size()!=num[i])
+            {
+              a[i].push_back(dis);
+              dis=dis+2;
+            }
+            break;
+        }
+    }
+    for(i=0;i<n;i++)
+    {
+        printf("#%d\n",i+1);
+        for(j=0;j<a[i].size();j++)
+        {
+            cout<<a[i][j];
+            if((j+1)%10==0)
+            {
+                cout<<endl;
+            }
+            else{
+                cout<<' ';
+            }
+        }
+    }
+    return 0;
+}
